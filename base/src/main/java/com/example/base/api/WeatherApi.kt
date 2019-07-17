@@ -1,15 +1,16 @@
 package com.example.base.api
 
+import com.example.base.api.response.WeatherResponse
+import io.reactivex.Observable
 import retrofit2.http.GET
-import retrofit2.http.Query
-import java.util.*
+import retrofit2.http.Path
 
 interface WeatherApi {
 
-    @GET("data/2.5/forecast")
+    @GET("forecast/{id}/{lat},{long}")
     fun getWeather(
-            @Query(value = "lat", encoded = true) lat: Double,
-            @Query(value = "lon", encoded = true) lon: Double,
-            @Query(value = "appid", encoded = true) key: String
-    ): Observable
+            @Path(value = "id", encoded = true) key: String,
+            @Path(value = "lat", encoded = true) lat: Double,
+            @Path(value = "long", encoded = true) long: Double
+    ): Observable<WeatherResponse>
 }

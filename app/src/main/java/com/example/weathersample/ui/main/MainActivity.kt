@@ -1,7 +1,8 @@
-package com.example.weathersample
+package com.example.weathersample.ui.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.weathersample.R
 
 class MainActivity : AppCompatActivity() {
 

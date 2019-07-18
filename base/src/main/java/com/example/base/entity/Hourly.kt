@@ -1,8 +1,18 @@
-package com.example.base.model
+package com.example.base.entity
 
 import com.google.gson.annotations.SerializedName
 
-data class Currently(
+data class Hourly(
+
+        @SerializedName("summary") val summary: String,
+
+        @SerializedName("icon") val icon: String,
+
+        @SerializedName("data") val data: List<DataHourly>
+
+)
+
+data class DataHourly(
 
         @SerializedName("time") val time: Long,
 
@@ -13,6 +23,8 @@ data class Currently(
         @SerializedName("precipIntensity") val precipIntensity: Double,
 
         @SerializedName("precipProbability") val precipProbability: Double,
+
+        @SerializedName("precipType") val precipType: String,
 
         @SerializedName("temperature") val temperature: Double,
 

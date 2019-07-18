@@ -1,8 +1,8 @@
 package com.example.base.api.response
 
-import com.example.base.model.Currently
-import com.example.base.model.Daily
-import com.example.base.model.Hourly
+import com.example.base.entity.Currently
+import com.example.base.entity.Daily
+import com.example.base.entity.Hourly
 import com.google.gson.annotations.SerializedName
 
 data class WeatherResponse(

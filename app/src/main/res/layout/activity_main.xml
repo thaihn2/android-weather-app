@@ -52,7 +52,7 @@
                     app:layout_constraintTop_toBottomOf="@id/text_temp" />
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recycle_hourly"
+                    android:id="@+id/recyclerHourly"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:scrollbars="none"
@@ -69,10 +69,10 @@
                     android:background="@android:color/white"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/recycle_hourly" />
+                    app:layout_constraintTop_toBottomOf="@id/recyclerHourly" />
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recycle_weekly"
+                    android:id="@+id/recyclerWeekly"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:scrollbars="none"
@@ -89,7 +89,7 @@
                     android:background="@android:color/white"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/recycle_weekly" />
+                    app:layout_constraintTop_toBottomOf="@id/recyclerWeekly" />
 
                 <TextView
                     android:id="@+id/text_status"
@@ -117,8 +117,7 @@
                     app:layout_constraintTop_toBottomOf="@id/text_status" />
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recycle_info"
-                    infoItem="@{viewModel.infoItems}"
+                    android:id="@+id/recyclerInfo"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:scrollbars="none"
@@ -135,7 +134,7 @@
                     android:background="@android:color/white"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/recycle_info" />
+                    app:layout_constraintTop_toBottomOf="@id/recyclerInfo" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>

@@ -10,6 +10,7 @@
         android:id="@+id/text_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="AAAA"
         android:textColor="@android:color/white"
         android:textSize="@dimen/item_daily_text_size"
         app:layout_constraintLeft_toLeftOf="parent"

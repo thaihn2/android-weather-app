@@ -1,6 +1,7 @@
 package com.example.weathersample.ui.main
 
 import android.annotation.SuppressLint
+import android.location.Location
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -27,8 +28,8 @@ class MainViewModel : ViewModel() {
     }
 
     @SuppressLint("CheckResult")
-    fun getWeather() {
-        weatherRepository.getWeather(21.0165393, 105.7840947)
+    fun getWeather(location: Location) {
+        weatherRepository.getWeather(location.latitude, location.longitude)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(

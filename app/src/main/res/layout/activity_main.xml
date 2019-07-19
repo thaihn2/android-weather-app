@@ -18,123 +18,86 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
+                <ProgressBar
+                    android:visibility="gone"
+                    android:id="@+id/progressbar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
                 <TextView
-                    android:id="@+id/text_title"
+                    android:id="@+id/textTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/main_margin"
+                    android:ellipsize="marquee"
+                    android:gravity="center"
+                    android:singleLine="true"
                     android:textColor="@android:color/white"
-                    android:textSize="@dimen/main_text_size_temp"
+                    android:textSize="20sp"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
 
                 <TextView
-                    android:id="@+id/text_temp"
+                    android:id="@+id/textTemp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/main_text_size_temp"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/text_title" />
-
-                <View
-                    android:id="@+id/line1"
-                    android:layout_width="0dp"
-                    android:layout_height="@dimen/main_line_height"
-                    android:layout_marginTop="@dimen/main_line_margin_top"
-                    android:layout_marginBottom="@dimen/main_line_margin_top"
-                    android:background="@android:color/white"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/text_temp" />
+                    app:layout_constraintTop_toBottomOf="@id/textTitle" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerHourly"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="40dp"
                     android:scrollbars="none"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/line1" />
+                    app:layout_constraintTop_toBottomOf="@id/textTemp" />
 
-                <View
-                    android:id="@+id/line2"
-                    android:layout_width="0dp"
-                    android:layout_height="@dimen/main_line_height"
-                    android:layout_marginTop="@dimen/main_line_margin_top"
-                    android:layout_marginBottom="@dimen/main_line_margin_top"
-                    android:background="@android:color/white"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/recyclerHourly" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerWeekly"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
                     android:scrollbars="none"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/line2" />
-
-                <View
-                    android:id="@+id/line3"
-                    android:layout_width="0dp"
-                    android:layout_height="@dimen/main_line_height"
-                    android:layout_marginTop="@dimen/main_line_margin_top"
-                    android:layout_marginBottom="@dimen/main_line_margin_top"
-                    android:background="@android:color/white"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/recyclerWeekly" />
+                    app:layout_constraintTop_toBottomOf="@id/recyclerHourly" />
 
                 <TextView
-                    android:id="@+id/text_status"
+                    android:id="@+id/textStatus"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/main_margin"
-                    android:layout_marginTop="@dimen/main_line_margin_top"
+                    android:layout_marginTop="20dp"
                     android:layout_marginRight="@dimen/main_margin"
                     android:layout_marginBottom="@dimen/main_line_margin_top"
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/item_daily_text_size"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/line3" />
-
-                <View
-                    android:id="@+id/line4"
-                    android:layout_width="0dp"
-                    android:layout_height="@dimen/main_line_height"
-                    android:layout_marginTop="@dimen/main_line_margin_top"
-                    android:layout_marginBottom="@dimen/main_line_margin_top"
-                    android:background="@android:color/white"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/text_status" />
+                    app:layout_constraintTop_toBottomOf="@id/recyclerWeekly" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerInfo"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
                     android:scrollbars="none"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/line4" />
-
-                <View
-                    android:id="@+id/line5"
-                    android:layout_width="0dp"
-                    android:layout_height="@dimen/main_line_height"
-                    android:layout_marginTop="@dimen/main_line_margin_top"
-                    android:layout_marginBottom="@dimen/main_line_margin_top"
-                    android:background="@android:color/white"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/recyclerInfo" />
+                    app:layout_constraintTop_toBottomOf="@id/textStatus" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>

@@ -16,5 +16,5 @@
     <dimen name="main_line_margin_top">10dp</dimen>
     <dimen name="main_line_height">1dp</dimen>
     <dimen name="main_margin">16dp</dimen>
-    <dimen name="main_text_size_temp">65sp</dimen>
+    <dimen name="main_text_size_temp">50sp</dimen>
 </resources>

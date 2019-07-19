@@ -23,7 +23,7 @@ class HourlyAdapter : DataBoundAdapter<DataHourly>() {
                 Utils.getImage(Utils.changeIconToName(item.icon), rootView.context)).into(
                 rootView.image_icon)
 
-        rootView.text_temp.text = Utils.changeTempFToC(item.temperature).toString() + Utils.makeTemp()
+        rootView.textTemp.text = Utils.changeTempFToC(item.temperature).toString() + Utils.makeTemp()
     }
 
     fun updateAll(newItem: List<DataHourly>) {

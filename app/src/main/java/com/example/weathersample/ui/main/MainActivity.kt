@@ -10,11 +10,12 @@ import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.base.api.response.WeatherResponse
+import com.example.base.data.network.response.WeatherResponse
 import com.example.base.entity.Info
 import com.example.base.extension.gone
 import com.example.base.extension.nonNullSingle
@@ -28,6 +29,7 @@ import com.example.weathersample.ui.main.adapter.WeeklyAdapter
 import com.example.weathersample.util.Utils
 import com.google.android.gms.location.*
 import kotlinx.android.synthetic.main.activity_main.*
+import javax.inject.Inject
 
 class MainActivity : BaseActivity() {
 
@@ -39,6 +41,9 @@ class MainActivity : BaseActivity() {
         private const val UPDATE_INTERVAL_IN_MILLISECONDS: Long = 10000
         private const val FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS: Long = UPDATE_INTERVAL_IN_MILLISECONDS / 2
     }
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private lateinit var mainViewModel: MainViewModel
 
@@ -55,7 +60,7 @@ class MainActivity : BaseActivity() {
         get() = R.layout.activity_main
 
     override fun initComponent(savedInstanceState: Bundle?) {
-        mainViewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
+        mainViewModel = ViewModelProviders.of(this, viewModelFactory).get(MainViewModel::class.java)
 
         if (!checkPermissions()) {
             requestPermissions()
@@ -163,7 +168,7 @@ class MainActivity : BaseActivity() {
 
         if (listAddress.isNotEmpty()) {
             listAddress[0].let {
-                result = "${it.featureName}, ${it.adminArea}, ${it.countryName}"
+                result = "${it.adminArea}"
             }
         }
         return result

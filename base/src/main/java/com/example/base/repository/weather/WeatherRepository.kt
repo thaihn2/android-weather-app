@@ -1,14 +1,18 @@
 package com.example.base.repository.weather
 
-import com.example.base.api.WeatherApi
-import com.example.base.api.response.WeatherResponse
+import android.location.Location
+import com.example.base.data.network.WeatherRemoteDataSource
+import com.example.base.data.network.response.WeatherResponse
 import io.reactivex.Observable
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class WeatherRepository(
-        val weatherApi: WeatherApi
-) {
+@Singleton
+class WeatherRepository @Inject constructor(
+        private val weatherRemoteDataSource: WeatherRemoteDataSource
+) : WeatherDataSource {
 
-    fun getWeather(latitude: Double,
-                   longitude: Double): Observable<WeatherResponse> = weatherApi.getWeather(
-            lat = latitude, long = longitude, key = "832976143348bc9e6a5f1b05bae34ee8")
+    override fun getWeather(location: Location): Observable<WeatherResponse> {
+        return weatherRemoteDataSource.getWeather(location)
+    }
 }

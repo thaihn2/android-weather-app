@@ -6,17 +6,18 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.base.api.response.WeatherResponse
+import com.example.base.data.network.response.WeatherResponse
 import com.example.base.repository.weather.WeatherRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
-class MainViewModel(private val weatherRepository: WeatherRepository) : ViewModel() {
+class MainViewModel(
+        private val weatherRepository: WeatherRepository
+) : ViewModel() {
 
     companion object {
         private val TAG = MainViewModel::class.java.simpleName
     }
-
 
     private val weatherResponseLiveData = MutableLiveData<WeatherResponse>()
     private val error = MutableLiveData<Throwable>()
@@ -26,7 +27,7 @@ class MainViewModel(private val weatherRepository: WeatherRepository) : ViewMode
 
     @SuppressLint("CheckResult")
     fun getWeather(location: Location) {
-        weatherRepository.getWeather(location.latitude, location.longitude)
+        weatherRepository.getWeather(location)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(

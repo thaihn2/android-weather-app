@@ -1,6 +1,7 @@
 package com.example.weathersample.di
 
 import android.app.Application
+import com.example.base.repository.weather.WeatherRepositoryModule
 import com.example.weathersample.MainApplication
 import dagger.BindsInstance
 import dagger.Component
@@ -12,7 +13,8 @@ import javax.inject.Singleton
         modules = [
             AndroidInjectionModule::class,
             AppModule::class,
-            ActivityBuilder::class
+            ActivityBuilder::class,
+            WeatherRepositoryModule::class
         ]
 )
 interface AppComponent {

@@ -4,8 +4,8 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
-@Entity(tableName = "currently")
-data class Currently(
+@Entity(tableName = "hourly")
+data class DataHourly(
 
         @PrimaryKey(autoGenerate = true) val id: Int = 0,
 
@@ -18,6 +18,8 @@ data class Currently(
         @SerializedName("precipIntensity") val precipIntensity: Double,
 
         @SerializedName("precipProbability") val precipProbability: Double,
+
+        @SerializedName("precipType") val precipType: String,
 
         @SerializedName("temperature") val temperature: Double,
 

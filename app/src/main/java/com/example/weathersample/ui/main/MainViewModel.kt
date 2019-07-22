@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.base.data.network.response.WeatherResponse
+import com.example.base.data.prefs.AppPreferenceHelper
 import com.example.base.entity.Currently
 import com.example.base.entity.DataDaily
 import com.example.base.entity.DataHourly
@@ -17,20 +18,22 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
 class MainViewModel(
-        private val weatherRepository: WeatherRepository
+        private val weatherRepository: WeatherRepository,
+        private val appPreferenceHelper: AppPreferenceHelper
 ) : ViewModel() {
 
     companion object {
         private val TAG = MainViewModel::class.java.simpleName
     }
 
-    private var mInfo = MutableLiveData<List<Info>>()
-    private var mCurrently = MutableLiveData<Currently>()
-    private var mHourly = MutableLiveData<List<DataHourly>>()
-    private var mDaily = MutableLiveData<List<DataDaily>>()
-    private var mStatus = MutableLiveData<Boolean>()
+    private val mInfo = MutableLiveData<List<Info>>()
+    private val mCurrently = MutableLiveData<Currently>()
+    private val mHourly = MutableLiveData<List<DataHourly>>()
+    private val mDaily = MutableLiveData<List<DataDaily>>()
+    private val mStatus = MutableLiveData<Boolean>()
+    private val mCountry = MutableLiveData<String>()
 
-    private var error = MutableLiveData<Throwable>()
+    private val error = MutableLiveData<Throwable>()
 
     @SuppressLint("CheckResult")
     fun getWeather(location: Location) {
@@ -45,6 +48,12 @@ class MainViewModel(
                     Log.d(TAG, "error: $it")
                     error.value = it
                 })
+
+        mCountry.value = appPreferenceHelper.getCountry()
+    }
+
+    fun saveCountry(name: String) {
+        appPreferenceHelper.setCounty(name)
     }
 
     @SuppressLint("CheckResult")
@@ -86,6 +95,8 @@ class MainViewModel(
                 }, {
                     Log.d(TAG, "Get DataDaily from db: $it")
                 })
+
+        mCountry.value = appPreferenceHelper.getCountry()
     }
 
     private fun saveDatabase(weatherResponse: WeatherResponse) {
@@ -121,6 +132,8 @@ class MainViewModel(
     fun getInfoLiveData(): LiveData<List<Info>> = mInfo
 
     fun getCurrentlyLiveData(): LiveData<Currently> = mCurrently
+
+    fun getCountryLiveData(): LiveData<String> = mCountry
 
     fun getError(): LiveData<Throwable> = error
 }

@@ -7,7 +7,9 @@ import android.location.Geocoder
 import android.location.Location
 import android.net.ConnectivityManager
 import android.os.Bundle
+import android.os.Handler
 import android.os.Looper
+import android.os.Message
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -30,6 +32,8 @@ import com.example.weathersample.ui.main.adapter.WeeklyAdapter
 import com.example.weathersample.util.Utils
 import com.google.android.gms.location.*
 import kotlinx.android.synthetic.main.activity_main.*
+import java.io.IOException
+import java.util.*
 import javax.inject.Inject
 
 
@@ -73,6 +77,8 @@ class MainActivity : BaseActivity() {
         if (!isNetworkAvailable()) {
             mMainViewModel.getWeatherFromDB()
         }
+
+        mMainViewModel.saveCountry("Hà Nội")
 
         // Init location
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
@@ -148,6 +154,10 @@ class MainActivity : BaseActivity() {
             textStatus.text = makeStatus(it[0])
         }
 
+        mMainViewModel.getCountryLiveData().nonNullSingle().observe(this) {
+            textTitle.text = it
+        }
+
         mMainViewModel.getError().nonNullSingle().observe(this) {
             swipeRefreshLayout.isRefreshing = false
             progressbar.gone()
@@ -179,11 +189,58 @@ class MainActivity : BaseActivity() {
         if (isNetworkAvailable()) {
             progressbar.visible()
             mMainViewModel.getWeather(location)
-            val address = getAddressFromLocation(location.latitude, location.longitude)
-            textTitle.text = address
-        } else {
-            textTitle.gone()
+
+            // Get address from location error
+//            getAddressFromLocation(location, this, GeocoderHandler())
         }
+    }
+
+    inner class GeocoderHandler : Handler() {
+        override fun handleMessage(msg: Message) {
+            super.handleMessage(msg)
+            var result: String? = null
+            when (msg.what) {
+                1 -> {
+                    val bundle = msg.data
+                    result = bundle.getString("address")
+                }
+                else -> {
+                    result = null
+                }
+            }
+            textTitle.text = result
+        }
+    }
+
+    private fun getAddressFromLocation(location: Location, context: Context, handler: Handler) {
+        val thread = Thread {
+            val geocoder = Geocoder(context, Locale.getDefault())
+            var result = ""
+
+            try {
+                val listAddress = geocoder.getFromLocation(location.latitude, location.longitude, 1)
+                if (listAddress != null && listAddress.size > 0) {
+                    val address = listAddress[0]
+                    result = address.adminArea
+                }
+                Log.d(TAG, "Address: $result")
+            } catch (exception: IOException) {
+                exception.printStackTrace()
+            } finally {
+                val msg = Message.obtain()
+                msg.target = handler
+                if (result.isNotEmpty()) {
+                    msg.what = 1
+                    val bundle = Bundle()
+                    bundle.putString("address", result)
+                    msg.data = bundle
+                } else {
+                    msg.what = 0
+                }
+                msg.sendToTarget()
+            }
+        }
+        thread.start()
     }
 
     private fun isNetworkAvailable(): Boolean {
@@ -196,19 +253,6 @@ class MainActivity : BaseActivity() {
         val maxTemp = Utils.changeTempFToC(dataDaily.temperatureHigh).toString() + Utils.makeTemp()
         val minTemp = Utils.changeTempFToC(dataDaily.temperatureLow).toString() + Utils.makeTemp()
         return "The high will be $maxTemp. ${dataDaily.summary} With a low of $minTemp."
-    }
-
-    private fun getAddressFromLocation(latitude: Double, longitude: Double): String {
-        var result = ""
-        val maxResult = 10
-
-        val listAddress = Geocoder(this).getFromLocation(latitude, longitude, maxResult)
-        if (listAddress.isNotEmpty()) {
-            listAddress[0].let {
-                result = it.adminArea
-            }
-        }
-        return result
     }
 
     private fun getLastLocation() {

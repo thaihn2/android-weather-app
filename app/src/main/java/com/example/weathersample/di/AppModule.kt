@@ -5,8 +5,10 @@ import android.content.Context
 import androidx.room.Room
 import com.example.base.BuildConfig
 import com.example.base.data.local.LocalDatabase
-import com.example.base.data.local.dao.WeatherDao
 import com.example.base.data.network.WeatherApi
+import com.example.base.data.prefs.AppPreferenceHelper
+import com.example.base.injection.ApplicationContext
+import com.example.base.injection.PreferenceInfo
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -22,6 +24,7 @@ import javax.inject.Singleton
 class AppModule {
 
     @Singleton
+    @ApplicationContext
     @Provides
     fun providerContext(application: Application): Context {
         return application
@@ -72,5 +75,11 @@ class AppModule {
     @Singleton
     fun provideLocalDatabase(application: Application): LocalDatabase {
         return Room.databaseBuilder(application, LocalDatabase::class.java, "weather.db").build()
+    }
+
+    @Provides
+    @Singleton
+    fun providerAppPreferenceHelper(application: Application): AppPreferenceHelper {
+        return AppPreferenceHelper(application)
     }
 }

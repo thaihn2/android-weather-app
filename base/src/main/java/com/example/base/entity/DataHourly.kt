@@ -19,7 +19,7 @@ data class DataHourly(
 
         @SerializedName("precipProbability") val precipProbability: Double,
 
-        @SerializedName("precipType") val precipType: String,
+        @SerializedName("precipType") val precipType: String?,
 
         @SerializedName("temperature") val temperature: Double,
 

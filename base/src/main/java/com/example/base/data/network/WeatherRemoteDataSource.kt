@@ -28,19 +28,20 @@ class WeatherRemoteDataSource @Inject constructor(
     override fun saveInfo(info: List<Info>) {
     }
 
-    override fun getInfo(): LiveData<List<Info>> {
+
+    override fun getInfo(): Observable<List<Info>> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun getCurrently(): LiveData<Currently> {
+    override fun getDataHourly(): Observable<List<DataHourly>> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun getDataDaily(): LiveData<List<DataDaily>> {
+    override fun getDataDaily(): Observable<List<DataDaily>> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun getDataHourly(): LiveData<List<DataHourly>> {
+    override fun getCurrently(): Observable<List<Currently>> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }

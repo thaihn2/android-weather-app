@@ -1,7 +1,6 @@
 package com.example.base.repository.weather
 
 import android.location.Location
-import androidx.lifecycle.LiveData
 import com.example.base.data.local.WeatherLocalDataSource
 import com.example.base.data.network.WeatherRemoteDataSource
 import com.example.base.data.network.response.WeatherResponse
@@ -23,20 +22,20 @@ class WeatherRepository @Inject constructor(
         return weatherRemoteDataSource.getWeather(location)
     }
 
-    override fun getCurrently(): LiveData<Currently> {
-        return weatherLocalDataSource.getCurrently()
+    override fun getInfo(): Observable<List<Info>> {
+        return weatherLocalDataSource.getInfo()
     }
 
-    override fun getDataDaily(): LiveData<List<DataDaily>> {
-        return weatherLocalDataSource.getDataDaily()
-    }
-
-    override fun getDataHourly(): LiveData<List<DataHourly>> {
+    override fun getDataHourly(): Observable<List<DataHourly>> {
         return weatherLocalDataSource.getDataHourly()
     }
 
-    override fun getInfo(): LiveData<List<Info>> {
-        return weatherLocalDataSource.getInfo()
+    override fun getDataDaily(): Observable<List<DataDaily>> {
+        return weatherLocalDataSource.getDataDaily()
+    }
+
+    override fun getCurrently(): Observable<List<Currently>> {
+        return weatherLocalDataSource.getCurrently()
     }
 
     override fun saveData(weatherResponse: WeatherResponse) {

@@ -15,7 +15,7 @@ import com.example.base.entity.Info
             DataHourly::class,
             Info::class
         ],
-        version = 1
+        version = 2
 )
 abstract class LocalDatabase : RoomDatabase() {
 

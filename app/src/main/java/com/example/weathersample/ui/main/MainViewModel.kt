@@ -47,17 +47,51 @@ class MainViewModel(
                 })
     }
 
+    @SuppressLint("CheckResult")
     fun getWeatherFromDB() {
-        // TODO fix
-        mCurrently = weatherRepository.getCurrently() as MutableLiveData<Currently>
-        mHourly = weatherRepository.getDataHourly() as MutableLiveData<List<DataHourly>>
-        mInfo = weatherRepository.getInfo() as MutableLiveData<List<Info>>
-        mDaily = weatherRepository.getDataDaily() as MutableLiveData<List<DataDaily>>
+        weatherRepository.getCurrently()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe({
+                    Log.d(TAG, "Local currently: $it")
+                    mCurrently.value = it[0]
+                }, {
+                    Log.d(TAG, "error: $it")
+                    error.value = it
+                })
+        weatherRepository.getDataDaily()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe({
+                    Log.d(TAG, "Get DataDaily from db: $it")
+                    mDaily.value = it
+                }, {
+                    Log.d(TAG, "Get DataDaily from db: $it")
+                })
+        weatherRepository.getDataHourly()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe({
+                    Log.d(TAG, "Get DataDaily from db: $it")
+                    mHourly.value = it
+                }, {
+                    Log.d(TAG, "Get DataDaily from db: $it")
+                })
+        weatherRepository.getInfo()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe({
+                    Log.d(TAG, "Get DataDaily from db: $it")
+                    mInfo.value = it
+                }, {
+                    Log.d(TAG, "Get DataDaily from db: $it")
+                })
     }
 
     private fun saveDatabase(weatherResponse: WeatherResponse) {
         val info = handleInfo(weatherResponse)
         weatherRepository.saveInfo(info)
+        weatherRepository.saveData(weatherResponse)
         mInfo.value = info
 
         mCurrently.value = weatherResponse.currently

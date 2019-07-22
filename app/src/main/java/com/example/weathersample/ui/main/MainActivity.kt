@@ -45,13 +45,13 @@ class MainActivity : BaseActivity() {
     }
 
     @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
+    lateinit var mViewModelFactory: ViewModelProvider.Factory
 
-    private lateinit var mainViewModel: MainViewModel
+    private lateinit var mMainViewModel: MainViewModel
 
-    private val hourlyAdapter = HourlyAdapter()
-    private val weeklyAdapter = WeeklyAdapter()
-    private val infoAdapter = InfoAdapter()
+    private val mHourlyAdapter = HourlyAdapter()
+    private val mWeeklyAdapter = WeeklyAdapter()
+    private val mInfoAdapter = InfoAdapter()
 
     private var mLocationRequest = LocationRequest()
     private var mFusedLocationClient: FusedLocationProviderClient? = null
@@ -62,7 +62,7 @@ class MainActivity : BaseActivity() {
         get() = R.layout.activity_main
 
     override fun initComponent(savedInstanceState: Bundle?) {
-        mainViewModel = ViewModelProviders.of(this, viewModelFactory).get(MainViewModel::class.java)
+        mMainViewModel = ViewModelProviders.of(this, mViewModelFactory).get(MainViewModel::class.java)
 
         if (!checkPermissions()) {
             requestPermissions()
@@ -71,7 +71,7 @@ class MainActivity : BaseActivity() {
         }
 
         if (!isNetworkAvailable()) {
-            mainViewModel.getWeatherFromDB()
+            mMainViewModel.getWeatherFromDB()
         }
 
         // Init location
@@ -90,17 +90,17 @@ class MainActivity : BaseActivity() {
         getLastLocation()
 
         recyclerHourly.apply {
-            adapter = hourlyAdapter
+            adapter = mHourlyAdapter
             layoutManager = LinearLayoutManager(this@MainActivity, RecyclerView.HORIZONTAL, false)
         }
 
         recyclerWeekly.apply {
-            adapter = weeklyAdapter
+            adapter = mWeeklyAdapter
             layoutManager = LinearLayoutManager(this@MainActivity, RecyclerView.VERTICAL, false)
         }
 
         recyclerInfo.apply {
-            adapter = infoAdapter
+            adapter = mInfoAdapter
             layoutManager = GridLayoutManager(this@MainActivity, 2)
         }
 
@@ -108,47 +108,47 @@ class MainActivity : BaseActivity() {
             if (!isNetworkAvailable()) {
                 swipeRefreshLayout.isRefreshing = false
                 Toast.makeText(this, "Network unavailable", Toast.LENGTH_SHORT).show()
-                mainViewModel.getWeatherFromDB()
+                mMainViewModel.getWeatherFromDB()
             } else {
                 if (mLocation != null) {
                     swipeRefreshLayout.isRefreshing = true
                     mLocation?.let {
-                        mainViewModel.getWeather(it)
+                        mMainViewModel.getWeather(it)
                     }
                 } else {
                     Toast.makeText(this, "Unknow location", Toast.LENGTH_SHORT).show()
                     swipeRefreshLayout.isRefreshing = false
-                    mainViewModel.getWeatherFromDB()
+                    mMainViewModel.getWeatherFromDB()
                 }
             }
         }
 
-        mainViewModel.getStatus().nonNullSingle().observe(this) {
+        mMainViewModel.getStatus().nonNullSingle().observe(this) {
             if (it) {
                 swipeRefreshLayout.isRefreshing = false
                 progressbar.gone()
             }
         }
 
-        mainViewModel.getCurrentlyLiveData().nonNullSingle().observe(this) {
+        mMainViewModel.getCurrentlyLiveData().nonNullSingle().observe(this) {
             textTemp.text = Utils.changeTempFToC(it.temperature).toString() + Utils.makeTemp()
             textTitle.isSelected = true
         }
 
-        mainViewModel.getHourlyLiveData().nonNullSingle().observe(this) {
-            hourlyAdapter.updateAll(it)
+        mMainViewModel.getHourlyLiveData().nonNullSingle().observe(this) {
+            mHourlyAdapter.updateAll(it)
         }
 
-        mainViewModel.getInfoLiveData().nonNullSingle().observe(this) {
-            infoAdapter.updateAll(it)
+        mMainViewModel.getInfoLiveData().nonNullSingle().observe(this) {
+            mInfoAdapter.updateAll(it)
         }
 
-        mainViewModel.getDailyLiveData().nonNullSingle().observe(this) {
-            weeklyAdapter.updateAll(it)
+        mMainViewModel.getDailyLiveData().nonNullSingle().observe(this) {
+            mWeeklyAdapter.updateAll(it)
             textStatus.text = makeStatus(it[0])
         }
 
-        mainViewModel.getError().nonNullSingle().observe(this) {
+        mMainViewModel.getError().nonNullSingle().observe(this) {
             swipeRefreshLayout.isRefreshing = false
             progressbar.gone()
             Toast.makeText(this, "${it.cause}", Toast.LENGTH_SHORT).show()
@@ -178,7 +178,7 @@ class MainActivity : BaseActivity() {
 
         if (isNetworkAvailable()) {
             progressbar.visible()
-            mainViewModel.getWeather(location)
+            mMainViewModel.getWeather(location)
             val address = getAddressFromLocation(location.latitude, location.longitude)
             textTitle.text = address
         } else {

@@ -1,7 +1,6 @@
 package com.example.base.data.local
 
 import android.location.Location
-import androidx.lifecycle.LiveData
 import com.example.base.data.network.response.WeatherResponse
 import com.example.base.entity.Currently
 import com.example.base.entity.DataDaily
@@ -41,19 +40,20 @@ class WeatherLocalDataSource @Inject constructor(
         }
     }
 
-    override fun getInfo(): LiveData<List<Info>> {
+
+    override fun getInfo(): Observable<List<Info>> {
         return localDatabase.weatherDao().queryInfo()
     }
 
-    override fun getCurrently(): LiveData<Currently> {
+    override fun getCurrently(): Observable<List<Currently>> {
         return localDatabase.weatherDao().queryCurrently()
     }
 
-    override fun getDataDaily(): LiveData<List<DataDaily>> {
+    override fun getDataDaily(): Observable<List<DataDaily>> {
         return localDatabase.weatherDao().queryDaily()
     }
 
-    override fun getDataHourly(): LiveData<List<DataHourly>> {
+    override fun getDataHourly(): Observable<List<DataHourly>> {
         return localDatabase.weatherDao().queryHourly()
     }
 }

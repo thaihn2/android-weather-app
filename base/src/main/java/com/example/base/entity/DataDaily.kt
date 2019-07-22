@@ -4,14 +4,18 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
-@Entity(tableName = "currently")
-data class Currently(
+@Entity(tableName = "daily")
+data class DataDaily(
 
         @PrimaryKey(autoGenerate = true) val id: Int = 0,
 
         @SerializedName("time") val time: Long,
 
         @SerializedName("summary") val summary: String,
+
+        @SerializedName("sunriseTime") val sunriseTime: Long,
+
+        @SerializedName("sunsetTime") val sunsetTime: Long,
 
         @SerializedName("icon") val icon: String,
 
@@ -20,6 +24,10 @@ data class Currently(
         @SerializedName("precipProbability") val precipProbability: Double,
 
         @SerializedName("temperature") val temperature: Double,
+
+        @SerializedName("temperatureHigh") val temperatureHigh: Double,
+
+        @SerializedName("temperatureLow") val temperatureLow: Double,
 
         @SerializedName("apparentTemperature") val apparentTemperature: Double,
 
@@ -41,6 +49,8 @@ data class Currently(
 
         @SerializedName("visibility") val visibility: Double,
 
-        @SerializedName("ozone") val ozone: Double
+        @SerializedName("ozone") val ozone: Double,
+
+        @SerializedName("precipType") val precipType: String
 
 )

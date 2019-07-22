@@ -7,18 +7,10 @@ import com.google.gson.annotations.SerializedName
 
 data class WeatherResponse(
 
-        @SerializedName("latitude") val latitude: String,
-
-        @SerializedName("longitude") val longitude: String,
-
-        @SerializedName("timezone") val timezone: String,
-
         @SerializedName("currently") val currently: Currently,
 
         @SerializedName("hourly") val hourly: Hourly,
 
-        @SerializedName("daily") val daily: Daily,
-
-        @SerializedName("offset") val offset: Int
+        @SerializedName("daily") val daily: Daily
 
 )

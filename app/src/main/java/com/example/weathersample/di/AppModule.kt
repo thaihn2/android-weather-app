@@ -2,7 +2,10 @@ package com.example.weathersample.di
 
 import android.app.Application
 import android.content.Context
+import androidx.room.Room
 import com.example.base.BuildConfig
+import com.example.base.data.local.LocalDatabase
+import com.example.base.data.local.dao.WeatherDao
 import com.example.base.data.network.WeatherApi
 import dagger.Module
 import dagger.Provides
@@ -13,6 +16,7 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
+
 
 @Module
 class AppModule {
@@ -62,5 +66,11 @@ class AppModule {
     @Singleton
     fun provideUserApi(retrofit: Retrofit): WeatherApi {
         return retrofit.create(WeatherApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideLocalDatabase(application: Application): LocalDatabase {
+        return Room.databaseBuilder(application, LocalDatabase::class.java, "weather.db").build()
     }
 }

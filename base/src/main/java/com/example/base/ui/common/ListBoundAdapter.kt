@@ -24,23 +24,4 @@ abstract class ListBoundAdapter<T>(diffCallback: DiffUtil.ItemCallback<T>) : Lis
     protected abstract fun inflateView(parent: ViewGroup, viewType: Int? = 0): View
 
     protected abstract fun bind(rootView: View, item: T)
-
-    // For implement
-//    override fun inflateView(parent: ViewGroup, viewType: Int?): View {
-//        return LayoutInflater.from(parent.context).inflate(R.layout.item_main_more, parent, false)
-//    }
-//
-//    override fun bind(rootView: View, item: User) {
-//        rootView.linearIconParent.gone()
-//    }
-//
-//    class UsersDiffCallback : DiffUtil.ItemCallback<User>() {
-//        override fun areContentsTheSame(oldItem: User, newItem: User): Boolean {
-//            return oldItem == newItem
-//        }
-//
-//        override fun areItemsTheSame(oldItem: User, newItem: User): Boolean {
-//            return oldItem.id == newItem.id
-//        }
-//    }
 }
